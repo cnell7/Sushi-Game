@@ -9,7 +9,6 @@ import comp401sushi.Plate;
 import comp401sushi.PlatePriceException;
 import comp401sushi.RicePortion;
 import comp401sushi.Roll;
-import comp401sushi.YellowtailPortion;
 import comp401sushi.SeaweedPortion;
 import comp401sushi.ShrimpPortion;
 import comp401sushi.TunaPortion;
@@ -67,7 +66,6 @@ public class RollMakerChefController implements ChefController {
 						new CrabPortion(Math.random()),
 						new EelPortion(Math.random()),
 						new RicePortion(Math.random()),
-						new YellowtailPortion(Math.random()),
 						new SeaweedPortion(Math.random()),
 						new ShrimpPortion(Math.random()),
 						new TunaPortion(Math.random()),

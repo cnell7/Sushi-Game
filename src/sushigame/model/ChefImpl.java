@@ -3,6 +3,7 @@ package sushigame.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import comp401sushi.IngredientPortion;
 import comp401sushi.Plate;
 import comp401sushi.RedPlate;
 import comp401sushi.Sushi;
@@ -17,11 +18,15 @@ public class ChefImpl implements Chef, BeltObserver {
 	private String name;
 	private ChefsBelt belt;
 	private boolean already_placed_this_rotation;
+	private double foodSpoiled;
+	private double foodConsumed;
 	
 	public ChefImpl(String name, double starting_balance, ChefsBelt belt) {
 		this.name = name;
 		this.balance = starting_balance;
 		this.belt = belt;
+		foodConsumed = 0;
+		foodSpoiled = 0;
 		belt.registerBeltObserver(this);
 		already_placed_this_rotation = false;
 		plate_history = new ArrayList<HistoricalPlate>();
@@ -83,10 +88,24 @@ public class ChefImpl implements Chef, BeltObserver {
 				balance += plate.getPrice();
 				Customer consumer = belt.getCustomerAtPosition(((PlateEvent) e).getPosition());
 				plate_history.add(new HistoricalPlateImpl(plate, consumer));
+				
+				IngredientPortion[] ingredients = plate.getContents().getIngredients();
+				for(int i = 0; i<ingredients.length; i++) {
+					foodConsumed += ingredients[i].getAmount();
+				}
 			}
+			
+			
 		} else if (e.getType() == BeltEvent.EventType.PLATE_SPOILED) {
 			Plate plate = ((PlateEvent) e).getPlate();
-			plate_history.add(new HistoricalPlateImpl(plate, null));
+			if (plate.getChef() == this) {
+				IngredientPortion[] ingredients2 = plate.getContents().getIngredients();
+				for(int i = 0; i<ingredients2.length; i++) {
+				foodSpoiled += ingredients2[i].getAmount();
+				}
+				plate_history.add(new HistoricalPlateImpl(plate, null));
+			}
+			
 		} else if (e.getType() == BeltEvent.EventType.ROTATE) {
 			already_placed_this_rotation = false;
 		}
@@ -96,4 +115,13 @@ public class ChefImpl implements Chef, BeltObserver {
 	public boolean alreadyPlacedThisRotation() {
 		return already_placed_this_rotation;
 	}
+	
+	public double getFoodConsumed() {
+		return foodConsumed;
+	}
+	
+	public double getFoodSpoiled() {
+		return foodSpoiled;
+	}
+
 }

@@ -68,7 +68,6 @@ public class NigiriChefController implements ChefController {
 		Nigiri.NigiriType[] types = new Nigiri.NigiriType[] {
 				Nigiri.NigiriType.CRAB,
 				Nigiri.NigiriType.EEL, 
-				Nigiri.NigiriType.YELLOWTAIL, 
 				Nigiri.NigiriType.TUNA, 
 				Nigiri.NigiriType.SHRIMP
 		};

@@ -68,7 +68,6 @@ public class SashimiChefController implements ChefController {
 		Sashimi.SashimiType[] types = new Sashimi.SashimiType[] {
 				Sashimi.SashimiType.CRAB,
 				Sashimi.SashimiType.EEL, 
-				Sashimi.SashimiType.YELLOWTAIL, 
 				Sashimi.SashimiType.TUNA, 
 				Sashimi.SashimiType.SHRIMP
 		};
